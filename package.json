@@ -10,16 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-graphql": "^0.5.0",
     "apollo-server": "^2.16.0",
     "apollo-server-core": ">=2.14.2",
     "apollo-server-express": ">=2.14.2",
     "body-parser": "^1.18.2",
-    "dot-env": "0.0.1",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3",
-    "graphql": "^0.13.2",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
     "graphql-tools": "^2.24.0",
     "lodash": "^4.17.5",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.6.0"
   }
 }

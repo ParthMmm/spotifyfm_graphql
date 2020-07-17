@@ -1,22 +1,19 @@
 require("dotenv").config();
 
 //Import libraries
-const { makeExecutableSchema } = require("graphql-tools")
-const { graphqlExpress, graphiqlExpress } = require("apollo-server-express")
-const bodyParser = require("body-parser")
+const express = require('express');
+const { ApolloServer, gql } = require('apollo-server-express');
 
 // Make executable schema
 const typeDefs = require("./schemas")
 const resolvers = require("./resolvers")
-const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 // Initialize Express middlewares
-const app = require("express")()
-app.use(bodyParser.json())
-app.use("/graphql", graphqlExpress({ schema }))
-app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
+const app = express()
+const server = new ApolloServer({ typeDefs, resolvers });
+server.applyMiddleware({ app });
 
 // Start app
-app.listen({ port: process.env.PORT || 8080 }, () => {
-    console.log("Listening on 8080")
-})
+app.listen({ port: process.env.PORT || 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+)
