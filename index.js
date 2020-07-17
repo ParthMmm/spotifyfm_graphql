@@ -1,19 +1,23 @@
 require("dotenv").config();
 
-//Import libraries
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const typeDefs = require("./schemas");
+const resolvers = require("./resolvers");
+const { ApolloServer, gql } = require("apollo-server");
 
-// Make executable schema
-const typeDefs = require("./schemas")
-const resolvers = require("./resolvers")
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true,
+  engine: {
+    reportSchema: true,
+    graphVariant: "current",
+  },
+});
 
-// Initialize Express middlewares
-const app = express()
-const server = new ApolloServer({ typeDefs, resolvers });
-server.applyMiddleware({ app });
-
-// Start app
-app.listen({ port: process.env.PORT || 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-)
+// The `listen` method launches a web server.
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+  console.log(`🚀 Server ready at ${url}`);
+});
